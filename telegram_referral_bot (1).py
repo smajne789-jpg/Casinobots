@@ -180,7 +180,16 @@ async def play(m: Message, state: FSMContext):
     data = await state.get_data()
     game = data["game"]
     bet = float(m.text)
+try:
+    bet = float(m.text)
+except:
+    await m.answer("❌ Введите число")
+    return
 
+if bet < 0.1:
+    await m.answer("❌ Минимальная ставка 0.1$")
+    return
+    
     u = get_user(m.from_user.id)
     if u[1] < bet:
         await m.answer("Нет баланса")
